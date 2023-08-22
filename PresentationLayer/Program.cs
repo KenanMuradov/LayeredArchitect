@@ -1,7 +1,16 @@
+using BusinessLayer.Infrastructure;
+using BusinessLayer.Services;
+using DataAccessLayer.EntityFramework;
+using Microsoft.EntityFrameworkCore;
+using PresentationLayer.Extension;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<AppDbContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("DbString")));
+builder.Services.AddRepositories();
+builder.Services.AddMemberService();
 
 var app = builder.Build();
 
